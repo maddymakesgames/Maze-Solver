@@ -233,7 +233,7 @@ int main(int argc, const char** argv) {
         if (path != NULL) {
             printf("Solution in %d steps.\n", vec_len(path));
         } else {
-            printf("No solution.");
+            printf("No solution.\n");
         }
     }
 
@@ -244,11 +244,10 @@ int main(int argc, const char** argv) {
             if (options.print_path) maze.map[p->y * maze.width + p->x] = '2';
             free(p);
         }
+        vec_free(path);
+
+        if (options.print_maze && options.print_path) print_maze(&maze);
     }
-
-    vec_free(path);
-
-    if (options.print_maze && options.print_path) print_maze(&maze);
 
     free(maze.map);
 

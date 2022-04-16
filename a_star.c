@@ -46,6 +46,8 @@ Vec get_path(Maze* maze, Point start, Point end) {
     // clear the array
     memset(paths, 0, maze->width * maze->height);
 
+    bool no_solution = false;
+
     // set the enterence to be traveled already
     set_location(paths, start.x, start.y, maze->width, 1);
 
@@ -119,21 +121,31 @@ Vec get_path(Maze* maze, Point start, Point end) {
             vec_insert(to_traverse, up);
         }
 
+        if (vec_empty(to_traverse)) {
+            no_solution = true;
+            break;
+        }
+
         curr_point = vec_remove(to_traverse);
     }
 
-    /// Create a new vec to hold the path
-    Vec path = vec_new(NULL);
-    Point* curr_path = curr_point;
+    Vec path = NULL;
 
-    while (curr_path != NULL) {
-        Point* p = malloc(sizeof(Point));
-        *p = *curr_path;
-        vec_insert(path, p);
-        curr_path = curr_path->parent;
+    if (!no_solution) {
+        /// Create a new vec to hold the path
+        path = vec_new(NULL);
+        Point* curr_path = curr_point;
+
+        while (curr_path != NULL) {
+            Point* p = malloc(sizeof(Point));
+            *p = *curr_path;
+            vec_insert(path, p);
+            curr_path = curr_path->parent;
+        }
+
+        free(curr_point);
     }
 
-    free(curr_point);
     // Free all the points
     while (!vec_empty(to_traverse)) {
         free(vec_remove(to_traverse));
