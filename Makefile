@@ -1,5 +1,5 @@
 #
-# Created by gmakemake (Ubuntu Oct  3 2011) on Fri Apr 15 20:59:07 2022
+# Created by gmakemake (Ubuntu Oct  3 2011) on Fri Apr 15 23:41:15 2022
 #
 
 #
@@ -51,7 +51,7 @@ CLIBFLAGS =     -lm
 
 
 CPP_FILES =	
-C_FILES =	a_star.c mopsolver.c test.c vec.c
+C_FILES =	a_star.c mopsolver.c vec.c
 PS_FILES =	
 S_FILES =	
 H_FILES =	path_finding.h vec.h
@@ -63,13 +63,10 @@ OBJFILES =	a_star.o vec.o
 # Main targets
 #
 
-all:	mopsolver test 
+all:	mopsolver 
 
 mopsolver:	mopsolver.o $(OBJFILES)
 	$(CC) $(CFLAGS) -o mopsolver mopsolver.o $(OBJFILES) $(CLIBFLAGS)
-
-test:	test.o $(OBJFILES)
-	$(CC) $(CFLAGS) -o test test.o $(OBJFILES) $(CLIBFLAGS)
 
 #
 # Dependencies
@@ -77,7 +74,6 @@ test:	test.o $(OBJFILES)
 
 a_star.o:	path_finding.h vec.h
 mopsolver.o:	path_finding.h vec.h
-test.o:	
 vec.o:	vec.h
 
 #
@@ -90,7 +86,7 @@ archive.tgz:	$(SOURCEFILES) Makefile
 	tar cf - $(SOURCEFILES) Makefile | gzip > archive.tgz
 
 clean:
-	-/bin/rm -f $(OBJFILES) mopsolver.o test.o core
+	-/bin/rm -f $(OBJFILES) mopsolver.o core
 
 realclean:        clean
-	-/bin/rm -f mopsolver test 
+	-/bin/rm -f mopsolver 
