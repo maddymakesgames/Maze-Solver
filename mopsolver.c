@@ -246,7 +246,7 @@ int main(int argc, const char** argv) {
         }
         vec_free(path);
 
-        if (options.print_maze && options.print_path) print_maze(&maze);
+        if (options.print_path) print_maze(&maze);
     }
 
     free(maze.map);
